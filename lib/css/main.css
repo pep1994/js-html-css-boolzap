@@ -260,7 +260,7 @@ ul {
     clear: both;
   }
 
-  .content-right .chat-send {
+   .chat-send {
     background-color: #D5F9BA;
     border-radius: 10px;
     float: right;
@@ -269,6 +269,7 @@ ul {
     padding: 20px;
     position: relative;
     clear: both;
+    margin: 5px 0;
   }
 
   .message-time {
@@ -279,7 +280,7 @@ ul {
     color: #B6B9BB;
   }
 
-  .content-right .chat-receveid {
+  .chat-receveid {
     background-color: #fff;
     border-radius: 10px;
     float: left;
@@ -288,5 +289,6 @@ ul {
     padding: 20px;
     position: relative;
     clear: both;
+    margin: 5px 0;
   }
 /**********************/
