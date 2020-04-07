@@ -65,7 +65,7 @@
                 </div>
               </li>
 
-              <li>
+              <li class="chat-active">
                 <div class="img-container">
                   <img src="img/avatar2.jpg" alt="profile-contact">
                 </div>
@@ -206,11 +206,11 @@
 
         <!-- inizio contenuto sezione destra -->
         <div class="content-right">
-          <div class="chat-send">
+          <div class="chat chat-send">
             <p class="text-message">Ciao come stai?</p>
             <span class="message-time">13:40</span>
           </div>
-          <div class="chat-receveid">
+          <div class="chat chat-receveid">
             <p class="text-message">Ciao io bene tu?</p>
             <span class="message-time">13:42</span>
           </div>
@@ -225,8 +225,10 @@
           </div>
           <input type="text" name="input_text" value="" placeholder="Scrivi un messaggio">
           <div class="right-footer">
-            <i class="fa fa-microphone microphone"></i>
-            <i class="fas fa-paper-plane plane"></i>
+            <div class="icon-container">
+              <i class="fa fa-microphone microphone"></i>
+              <i class="fas fa-paper-plane plane"></i>
+            </div>
           </div>
         </footer>
         <!-- fine footer -->

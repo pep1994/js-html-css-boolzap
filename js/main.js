@@ -10,35 +10,36 @@ $(document).ready(function(){
   console.log(inputChat);
 
   // quando l'input per inviare un messaggio prende il focus scompare l'icona del microfono e appare l'icona per inviare il messaggio
-  inputChat.click(
-    function(e){
+  inputChat.focus(
+    function(){
       $('.microphone').hide();
       $('.plane').show();
-      e.stopPropagation();
   });
 
-
-  // inputChat.blur(
-  //   function(){
-  //     $('.plane').hide();
-  //     $('.microphone').show();
-  // });
-
-  // quando clicco da qualsiasi parte l'icona dell'invio messaggio scompare e ricompare l'icona del microfono
-  $(document).click(
+  // quando l'input per inviare un messaggio perde il focus scompare l'icona dell'invio messaggio e riappare l'icona del microfono
+  inputChat.blur(
     function(){
       $('.plane').hide();
       $('.microphone').show();
   });
 
-  // quando l'utente clicca per inviare il messaggio mi salvo il valore che l'utente ha inserito nell'input dell'invio del messaggio
 
-  $('.plane').click(
+  // quando l'utente clicca per inviare il messaggio mi salvo il valore che l'utente ha inserito nell'input dell'invio del messaggio. Il valore lo inserico nella finestra della conversazione
+
+  $('.icon-container').click(
     function(){
       textInput = inputChat.val(); // salvo il valore dell'input in una variabile
-      $('.content-right').append("<div class='chat-send'>" + textInput + "</div>");
-      inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
+
+      // se il messaggio è vuoto non fare nulla
+      if (textInput == "") {
+
+        // altrimenti inseriscilo nella finestra della conversazione
+      } else {
+        $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" +  "<span class='message-time'>13:42</span>" + "</div>");
+        inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
+      }
   });
+
 
 
 });
