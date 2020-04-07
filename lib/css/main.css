@@ -208,9 +208,40 @@ ul {
   overflow-y: scroll;
 }
 
-footer {
-  height: 70px;
-  background: #F3EEEA;
-}
+  /* footer */
+
+  footer {
+    height: 70px;
+    background: #F3EEEA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0 10px 0;
+  }
+
+  .left-footer,
+  .right-footer {
+    flex-basis: 10%;
+    text-align: center;
+  }
+
+  footer input {
+    flex-basis: 80%;
+    height: 100%;
+    border-radius: 5px;
+    border: none;
+    padding: 15px;
+    font-size: 14px;
+    color: #B6B9BB;
+  }
+
+  footer i {
+    color: #6B7376;
+    font-size: 25px;
+  }
+
+  .plane {
+    display: none;
+  }
 
 /**********************/
