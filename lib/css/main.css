@@ -213,6 +213,10 @@ ul {
   overflow-y: scroll;
 }
 
+.avatar {
+  flex-shrink: 0;
+}
+
 
 
   /* footer */
@@ -276,7 +280,7 @@ ul {
     padding: 20px;
     position: relative;
     clear: both;
-    margin: 5px 0;
+    margin: 8px 0;
   }
 
   .message-time {
@@ -296,7 +300,7 @@ ul {
     padding: 20px;
     position: relative;
     clear: both;
-    margin: 5px 0;
+    margin: 8px 0;
   }
 
   .chat-active {
@@ -307,3 +311,125 @@ ul {
     display: inline-block;
   }
 /**********************/
+
+/* media query */
+@media screen and (max-width: 991px) {
+  .content-right {
+    padding: 20px;
+  }
+
+  .container {
+    width: 95%;
+  }
+
+  .chat-options i {
+    font-size: 16px;
+
+  }
+
+  .avatar {
+    width: 30px;
+  }
+
+  .chat-contacts {
+    height: calc(100% - 200px - 50px);
+  }
+
+  .chat-contacts img {
+    width: 30px;
+    border-radius: 100%;
+  }
+
+  #profile {
+    width: 30px;
+  }
+
+  h3 {
+    font-size: 13px;
+  }
+
+  .img-container h3 {
+    font-size: 13px;
+  }
+
+  .notifications {
+    flex-wrap: wrap;
+    height: 200px;
+    justify-content: center;
+  }
+
+  .bell-title {
+    text-align: center;
+  }
+
+  .header-right {
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content:
+  }
+
+  .chat {
+    padding: 10px 10px 15px 10px;
+  }
+
+  .message-time {
+    bottom: 0;
+
+  }
+
+  .chat-contacts li {
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .chat-time {
+    font-size: 9px;
+    color: #B6B9BB;
+    position: absolute;
+    top: 2px;
+    right: 5px;
+  }
+
+  .name-contact {
+    flex-basis: calc(100% - 40px);
+    margin-left: 10px;
+  }
+
+  .header-left {
+    flex-wrap: wrap;
+  }
+
+}
+
+@media screen and (max-width: 450px) {
+  .chat-contacts li h3 small {
+    display: none;
+  }
+
+  .header-right {
+    justify-content: center;
+    padding-bottom: 5px;
+  }
+
+  .header-left {
+    justify-content: center;
+    padding-bottom: 5px;
+  }
+
+  .chat-options {
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-around;
+    align-self: flex-end;
+  }
+
+  .chat-options i {
+    margin: 0;
+  }
+
+  .chat {
+    max-width: 80%;
+  }
+}

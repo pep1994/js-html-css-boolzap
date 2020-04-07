@@ -35,11 +35,9 @@ $(document).ready(function(){
 
         // altrimenti inseriscilo nella finestra della conversazione
       } else {
-        $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" +  "<span class='message-time'>13:42</span>" + "</div>");
-        inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
+          $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" +  "<span class='message-time'>13:42</span>" + "</div>");
+          inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
       }
   });
-
-
 
 });
