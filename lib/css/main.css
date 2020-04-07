@@ -242,6 +242,11 @@ ul {
 
   .plane {
     display: none;
+    cursor: pointer;
+  }
+
+  .microphone {
+    cursor: pointer;
   }
 
   /* contenuto sezione destra */
