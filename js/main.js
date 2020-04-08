@@ -26,14 +26,14 @@ $(document).ready(function(){
 
       // altrimenti inseriscilo nella finestra della conversazione
     } else {
-        $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" +  "<span class='message-time'>13:42</span>" + "</div>");
+        $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:42</span>" + "</div>");
 
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
 
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
-            $('.content-right').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" +  "<span class='message-time'>13:43</span>" + "</div>");
+            $('.content-right').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:43</span>" + "</div>");
         }, 1000);
     }
   }
@@ -83,7 +83,7 @@ $(document).ready(function(){
           var nameContact = $(this).find('h3').text().toLowerCase(); // salvo il nome di ogni singolo contatto e lo converto in minuscolo
           console.log(nameContact);
         // confronto il valore che ha inserito l'utente con i nomi dei contatti
-        // se il valore inserito dall'utente è incluso nei nomi dei contatti allora questi contatti rimangono visualizzati nella ricerca, altrimenti rimuovili
+        // se il valore inserito dall'utente è incluso nei nomi dei contatti allora questi contatti rimangono visualizzati nella ricerca, altrimenti scompaiono
           if (nameContact.includes(textSearch)) {
             $(this).show();
           } else {
@@ -91,6 +91,42 @@ $(document).ready(function(){
           }
       });
     }
+  });
+
+  console.log($('.chat-contacts'));
+
+  // aggancio l'evento tastiera alla sezione dei contatti. Quando viene premuto il tasto freccia in giù la selezione del contatto si sposterà di conseguenza, stesso discorso per la freccia in su
+  $('.chat-contacts').keydown(
+    function (event) {
+      var itemActive = $('li.active');
+      console.log(event.which);
+      console.log(event.target);
+      if (event.which == 40) {
+        itemActive.removeClass("active");
+        itemActive.next().addClass("active");
+      }
+
+      if (event.which == 38) {
+        itemActive.removeClass("active");
+        itemActive.prev().addClass("active");
+      }
+
+      if (event.which == 40 && itemActive.hasClass('last')) {
+        itemActive.removeClass("active");
+        $('li.first').addClass("active");
+      }
+
+      if (event.which == 38 && itemActive.hasClass('first')) {
+        itemActive.removeClass("active");
+        $('li.last').addClass("active");
+      }
+  });
+
+  // aggancio l'evento click ai contatti così la classe active viene data solo al contatto cliccato
+  $('.chat-contacts li').click(
+    function () {
+      $(this).addClass("active");
+      $(this).siblings().removeClass("active");
   });
 
 
