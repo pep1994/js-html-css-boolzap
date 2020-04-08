@@ -6,12 +6,16 @@
 
 $(document).ready(function(){
 
-  var inputChat, textInput;
+  var inputChat, textInput, searchInput, textSearch, listContacts;
 
 
-  inputChat = $('input[name="input_text"]'); // salvo in una variabile il riferimento all'input
-  inputChat.val(""); // imposto di default il valore vuoto per l'input
-  console.log(inputChat);
+  inputChat = $('input[name="input_text"]'); // salvo in una variabile il riferimento all'input di chat
+  inputChat.val(""); // imposto di default il valore vuoto per l'input di chat
+  searchInput = $('#search'); // salvo il riferimento all'input di ricerca contatti
+  searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
+  listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
+  console.log(listContacts);
+
 
   // quando l'input per inviare un messaggio prende il focus scompare l'icona del microfono e appare l'icona per inviare il messaggio
   inputChat.focus(
@@ -49,6 +53,27 @@ $(document).ready(function(){
               $('.content-right').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" +  "<span class='message-time'>13:43</span>" + "</div>");
           }, 1000);
       }
+  });
+
+
+  // aggancio l'evento del premere un tasto della tastiera all'input di ricerca
+  searchInput.keyup(function () {
+    textSearch = searchInput.val().toLowerCase(); // salvo il valore che ha scritto l'utente e lo converto in minuscolo
+    console.log(textSearch);
+
+    // ciclo tutti i contatti per selezionare il nome del contatto e confrontarlo con il valore inserito dall'utente
+    listContacts.each(
+      function () {
+        var nameContact = $(this).find('h3').text().toLowerCase(); // salvo il nome di ogni singolo contatto e lo converto in minuscolo
+        console.log(nameContact);
+        // confronto il valore che ha inserito l'utente con i nomi dei contatti
+        // se il valore inserito dall'utente è incluso nei nomi dei contatti allora questi contatti rimangono visualizzati nella ricerca, altrimenti rimuovili
+        if (nameContact.includes(textSearch)) {
+          $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
   });
 
 

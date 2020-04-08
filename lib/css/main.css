@@ -147,6 +147,7 @@ ul {
   border-bottom: 1px solid #F5F5F5;
   padding: 20px;
   cursor: pointer;
+  position: relative;
 }
 
 .chat-contacts li:hover {
@@ -159,18 +160,20 @@ ul {
 
 .name-contact {
   flex-basis: calc(100% - 70px);
-  display: flex;
   justify-content: space-between;
   margin-left: 20px;
 }
 
-.name-contact h3 small {
+.name-contact small {
   color: #B6B9BB;
 }
 
 .chat-time {
   font-size: 12px;
   color: #B6B9BB;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 /*************************/
