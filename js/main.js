@@ -6,7 +6,7 @@
 
 $(document).ready(function(){
 
-  var inputChat, textInput, searchInput, textSearch, listContacts;
+  var inputChat, searchInput, textSearch, listContacts;
 
 
   inputChat = $('input[name="input_text"]'); // salvo in una variabile il riferimento all'input di chat
@@ -17,14 +17,48 @@ $(document).ready(function(){
   console.log(listContacts);
 
 
-  // quando l'input per inviare un messaggio prende il focus scompare l'icona del microfono e appare l'icona per inviare il messaggio
-  inputChat.focus(
-    function(){
-      $('.microphone').hide();
-      $('.plane').show();
+  // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
+  function messageSentAndReceveid (){
+    var textInput = inputChat.val(); // salvo il valore dell'input in una variabile
+
+    // se il messaggio è vuoto non fare nulla
+    if (textInput == "") {
+
+      // altrimenti inseriscilo nella finestra della conversazione
+    } else {
+        $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" +  "<span class='message-time'>13:42</span>" + "</div>");
+
+        inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
+
+        // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
+        setTimeout(
+          function () {
+            $('.content-right').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" +  "<span class='message-time'>13:43</span>" + "</div>");
+        }, 1000);
+    }
+  }
+
+
+  // aggancio gli eventi focus e tastiera all'input di chat
+  inputChat.on({
+
+    // quando l'input di chat prende il focus scompare l'icona del microfono e appare l'icona per inviare il messaggio
+    focus:
+      function(){
+        $('.microphone').hide();
+        $('.plane').show();
+      },
+    // se l'utente ha premuto il tasto invio mentre era sull'input richiama la funzione di invio e ricezione messaggio
+    keyup:
+      function (e) {
+        if (e.keyCode == 13) {
+          messageSentAndReceveid();
+        }
+      }
   });
 
-  // quando l'input per inviare un messaggio perde il focus scompare l'icona dell'invio messaggio e riappare l'icona del microfono
+
+  // quando l'input di chat perde il focus scompare l'icona dell'invio messaggio e riappare l'icona del microfono
   inputChat.blur(
     function(){
       $('.plane').hide();
@@ -32,31 +66,11 @@ $(document).ready(function(){
   });
 
 
-  // quando l'utente clicca per inviare il messaggio mi salvo il valore che l'utente ha inserito nell'input dell'invio del messaggio. Il valore lo inserico nella finestra della conversazione
-
-  $('.icon-container').click(
-    function(){
-      textInput = inputChat.val(); // salvo il valore dell'input in una variabile
-
-      // se il messaggio è vuoto non fare nulla
-      if (textInput == "") {
-
-        // altrimenti inseriscilo nella finestra della conversazione
-      } else {
-          $('.content-right').append("<div class='chat chat-send'>" + "<p class='text-message'>" + textInput + "</p>" +  "<span class='message-time'>13:42</span>" + "</div>");
-
-          inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
-
-          // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
-          setTimeout(
-            function () {
-              $('.content-right').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" +  "<span class='message-time'>13:43</span>" + "</div>");
-          }, 1000);
-      }
-  });
+  // quando l'utente clicca per inviare il messaggio esegui la funzione di invio e ricevimento messaggio
+  $('.icon-container').click(messageSentAndReceveid);
 
 
-  // aggancio l'evento input che si scatena ogni volta che il valore dell'input cambia, all'input di ricerca
+  // all'input di ricerca aggancio l'evento input che si scatena ogni volta che il valore dell'input cambia
   searchInput.on({
     input:
     function () {
