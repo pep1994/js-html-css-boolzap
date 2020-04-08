@@ -56,24 +56,27 @@ $(document).ready(function(){
   });
 
 
-  // aggancio l'evento del premere un tasto della tastiera all'input di ricerca
-  searchInput.keyup(function () {
-    textSearch = searchInput.val().toLowerCase(); // salvo il valore che ha scritto l'utente e lo converto in minuscolo
-    console.log(textSearch);
+  // aggancio l'evento input che si scatena ogni volta che il valore dell'input cambia, all'input di ricerca
+  searchInput.on({
+    input:
+    function () {
+      textSearch = searchInput.val().toLowerCase(); // salvo il valore che ha scritto l'utente e lo converto in minuscolo
+      console.log(textSearch);
 
     // ciclo tutti i contatti per selezionare il nome del contatto e confrontarlo con il valore inserito dall'utente
-    listContacts.each(
-      function () {
-        var nameContact = $(this).find('h3').text().toLowerCase(); // salvo il nome di ogni singolo contatto e lo converto in minuscolo
-        console.log(nameContact);
+      listContacts.each(
+        function () {
+          var nameContact = $(this).find('h3').text().toLowerCase(); // salvo il nome di ogni singolo contatto e lo converto in minuscolo
+          console.log(nameContact);
         // confronto il valore che ha inserito l'utente con i nomi dei contatti
         // se il valore inserito dall'utente è incluso nei nomi dei contatti allora questi contatti rimangono visualizzati nella ricerca, altrimenti rimuovili
-        if (nameContact.includes(textSearch)) {
-          $(this).show();
-        } else {
+          if (nameContact.includes(textSearch)) {
+            $(this).show();
+          } else {
             $(this).hide();
-        }
-    });
+          }
+      });
+    }
   });
 
 
