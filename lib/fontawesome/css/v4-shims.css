@@ -1299,7 +1299,7 @@
 .fa.fa-wechat:before {
   content: "\f1d7"; }
 
-.fa.fa-send:before {
+.fa.fa-sent:before {
   content: "\f1d8"; }
 
 .fa.fa-paper-plane-o {
@@ -1309,11 +1309,11 @@
 .fa.fa-paper-plane-o:before {
   content: "\f1d8"; }
 
-.fa.fa-send-o {
+.fa.fa-sent-o {
   font-family: 'Font Awesome 5 Free';
   font-weight: 400; }
 
-.fa.fa-send-o:before {
+.fa.fa-sent-o:before {
   content: "\f1d8"; }
 
 .fa.fa-circle-thin {

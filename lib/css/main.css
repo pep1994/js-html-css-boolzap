@@ -271,7 +271,7 @@ ul {
     overflow-y: scroll;
   }
 
- .chat-send {
+ .chat-sent {
     background-color: #D5F9BA;
     border-radius: 10px;
     float: right;
@@ -303,6 +303,20 @@ ul {
     margin: 8px 0;
   }
 
+  .chat {
+    position: relative;
+  }
+
+  .chat::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .chat:hover .fa-chevron-down {
+    display: inline-block;
+  }
+
   .active-chat {
     background-color: #E9EBEB;
   }
@@ -313,6 +327,9 @@ ul {
 
   .fa-chevron-down {
     display: none;
+    color: #B6B9BB;
+    cursor: pointer;
+    float: right;
   }
 
   .chat-contacts:focus {
@@ -321,6 +338,30 @@ ul {
 
   .active {
     display: block;
+  }
+
+  .dropdown-menu {
+    width: 170px;
+    position: absolute;
+    bottom: -130%;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 10;
+    display: none;
+  }
+
+  .dropdown-menu li {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .dropdown-menu li:first-child {
+    border-bottom: solid 1px #F5F5F5;
+  }
+  .dropdown-menu li:hover {
+    color: #E9EBEB;
   }
 /**********************/
 
