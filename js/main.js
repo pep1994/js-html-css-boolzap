@@ -20,29 +20,35 @@ $(document).ready(function(){
   searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
   listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
   console.log(listContacts);
-  dropdownMenu = '<ul class="dropdown-menu"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'
+  dropdownMenu = '<ul class="dropdown-menu"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu da inserire nei messaggi inviati e ricevuti
+
+
 
 
   // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
   function messageSentAndReceveid (){
     var textInput = inputChat.val(); // salvo il valore dell'input in una variabile
+    var date = new Date(); // creo una variabile che ha in memoria la data completa
+    var hours = date.getHours(); // salvo l'ora
+    var minutes = date.getMinutes(); // salvo i minuti
+    var time = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
 
     // se il messaggio è vuoto non fare nulla
     if (textInput == "") {
 
       // altrimenti inseriscilo nella finestra della conversazione
     } else {
-        $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:42</span>" + dropdownMenu + "</div>");
+        $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenu + "</div>");
 
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
-        var smallTitle = $('.name-chat').find('small').text(); // salvo il testo contenuto nel tag small sotto il nome del contatto che ha la chat aperte
+
         $('.name-chat').find('small').text('Sta scrivendo...'); // sostituisco il testo con sta scrivendo... quando il messaggio viene inviato
-        console.log(smallTitle);
+
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
-            $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:43</span>" + dropdownMenu + "</div>");
-            $('.name-chat').find('small').text(smallTitle); // il testo sta scrivendo... viene sostituito dal testo precedente
+            $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenu + "</div>");
+            $('.name-chat').find('small').text("Ultimo accesso oggi alle " + time); // il testo sta scrivendo... viene sostituito dal testo precedente più l'ora dell'invio del suo messaggio
         }, 1000);
     }
   }
@@ -147,7 +153,7 @@ $(document).ready(function(){
     //     $("ul.dropdown-menu").slideUp();
     // });
 
-  console.log($('.chat-contacts'));
+
 
   // aggancio l'evento tastiera alla sezione dei contatti. Quando viene premuto il tasto freccia in giù la selezione del contatto si sposterà di conseguenza, stesso discorso per la freccia in su
   // $('.chat-contacts').keydown(
