@@ -206,16 +206,20 @@ ul {
 }
 
 .content-right {
-  height: calc(100% - 140px);
-  background: url(../../img/Sfondo.jpg);
-  background-position: center;
-  overflow-y: scroll;
+  padding: 40px 80px;
+  height: 100%;
+  display: none;
+}
+
+.content-right::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .avatar {
   flex-shrink: 0;
 }
-
 
 
   /* footer */
@@ -260,17 +264,14 @@ ul {
   }
 
   /* contenuto sezione destra */
-  .content-right {
-    padding: 40px 80px;
+  .container-chat-right {
+    height: calc(100% - 140px);
+    background: url(../../img/Sfondo.jpg);
+    background-position: center;
+    overflow-y: scroll;
   }
 
-  .content-right::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-   .chat-send {
+ .chat-send {
     background-color: #D5F9BA;
     border-radius: 10px;
     float: right;
@@ -302,7 +303,7 @@ ul {
     margin: 8px 0;
   }
 
-  .active {
+  .active-chat {
     background-color: #E9EBEB;
   }
 
@@ -316,6 +317,10 @@ ul {
 
   .chat-contacts:focus {
     outline: 0;
+  }
+
+  .active {
+    display: block;
   }
 /**********************/
 

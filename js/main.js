@@ -4,6 +4,11 @@
 // Risposta dall’interlocutore: ad ogni inserimento di un messaggio, l’utente riceverà un “ok” come risposta, che apparirà dopo 1 secondo.
 // Ricerca utenti: scrivendo qualcosa nell’input a sinistra, vengono visualizzati solo i contatti il cui nome contiene le lettere inserite (es, Marco, Matteo Martina -> Scrivo “mar” rimangono solo Marco e Martina)
 
+// step 3
+// Click sul contatto mostra la conversazione del contatto cliccato,
+// è possibile inserire nuovi messaggi per ogni conversazione
+// Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
+
 $(document).ready(function(){
 
   var inputChat, searchInput, textSearch, listContacts;
@@ -93,41 +98,56 @@ $(document).ready(function(){
     }
   });
 
+  // aggancio l'evento click ai contatti
+  $('.chat-contacts li').click(
+    function () {
+      $(this).addClass("active-chat"); // diventerà attivo solo il contatto cliccato
+      $(this).siblings().removeClass("active-chat"); // gli altri contatti non saranno selezionati
+      var dataContact = $(this).data('name'); // salvo il valore del data-attribute del contatto cliccato
+      console.log(dataContact);
+      var containerChat = $('.content-right'); // salvo il riferimento a tutte le finestre di chat
+      containerChat.removeClass("active"); // rimuovo la class active da tutte le finestre di chat
+      containerChat.each( // eseguo un ciclo sulle finestre di chat per estrapolare il valore del data-attribute ad ogni iterazione
+        function () {
+        var dataChat = $(this).data('name'); // salvo il valore del data-attribute della finestra di chat a quella iterazione
+
+        // se il data-attribute del contatto cliccato corrisponde a quello della finestra di chat allora mostrami quella finestra di chat, altrimenti tienimela nascosta
+        if (dataContact === dataChat) {
+          $(this).addClass('active');
+          console.log(dataChat);
+        }
+      });
+  });
+
   console.log($('.chat-contacts'));
 
   // aggancio l'evento tastiera alla sezione dei contatti. Quando viene premuto il tasto freccia in giù la selezione del contatto si sposterà di conseguenza, stesso discorso per la freccia in su
-  $('.chat-contacts').keydown(
-    function (event) {
-      var itemActive = $('li.active');
-      console.log(event.which);
-      console.log(event.target);
-      if (event.which == 40) {
-        itemActive.removeClass("active");
-        itemActive.next().addClass("active");
-      }
+  // $('.chat-contacts').keydown(
+  //   function (event) {
+  //     var itemActive = $('li.active');
+  //     console.log(event.which);
+  //     console.log(event.target);
+  //     if (event.which == 40) {
+  //       itemActive.removeClass("active");
+  //       itemActive.next().addClass("active");
+  //     }
+  //
+  //     if (event.which == 38) {
+  //       itemActive.removeClass("active");
+  //       itemActive.prev().addClass("active");
+  //     }
+  //
+  //     if (event.which == 40 && itemActive.hasClass('last')) {
+  //       itemActive.removeClass("active");
+  //       $('li.first').addClass("active");
+  //     }
+  //
+  //     if (event.which == 38 && itemActive.hasClass('first')) {
+  //       itemActive.removeClass("active");
+  //       $('li.last').addClass("active");
+  //     }
+  // });
 
-      if (event.which == 38) {
-        itemActive.removeClass("active");
-        itemActive.prev().addClass("active");
-      }
-
-      if (event.which == 40 && itemActive.hasClass('last')) {
-        itemActive.removeClass("active");
-        $('li.first').addClass("active");
-      }
-
-      if (event.which == 38 && itemActive.hasClass('first')) {
-        itemActive.removeClass("active");
-        $('li.last').addClass("active");
-      }
-  });
-
-  // aggancio l'evento click ai contatti così la classe active viene data solo al contatto cliccato
-  $('.chat-contacts li').click(
-    function () {
-      $(this).addClass("active");
-      $(this).siblings().removeClass("active");
-  });
 
 
 });
