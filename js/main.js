@@ -20,7 +20,7 @@ $(document).ready(function(){
   searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
   listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
   console.log(listContacts);
-  dropdownMenu = '<ul class="dropdown-menu"><li>Info messaggio</li><li>Cancella messaggio</li></ul>'
+  dropdownMenu = '<ul class="dropdown-menu"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'
 
 
   // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
@@ -122,9 +122,15 @@ $(document).ready(function(){
 
   // aggancio l'evento click all'icona "down" per far aprire il mneu-dropdown. Delego, però, l'evento click al primo "padre" creato staticamente, perchè l'icona è creata dinamicamente e non prenderebbe l'aggancio dell'evento.
   $('.content-right').on("click", ".fa-chevron-down",
-    function(event) {
+    function() {
       $(this).siblings("ul.dropdown-menu").slideToggle(); // quando l'icona viene cliccata seleziono suo "fratello" il menu-dropdown e gli dico di aprirsi e di chiudersi ricliccando sull'icona
     });
+
+    // aggancio l'evento click all'opzione "cancella messaggio" del dropdown-menu per cancellare il messaggio. Delego, però, l'evento click al primo "padre" creato staticamente, perchè il dropdown-menu è creato dinamicamente e non prenderebbe l'aggancio dell'evento.
+    $('.content-right').on("click", ".remove-message",
+      function() {
+        $(this).parents('.chat').remove(); // cliccando l'opzione cancella messaggio, seleziono suo "padre" con la classe "chat", che sarebbe il messaggio, e lo elimino
+      });
 
     // // cliccando da qualsiasi parte i menu dropdown si chiudono
     // $(window).click(
