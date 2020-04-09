@@ -207,7 +207,6 @@ ul {
 
 .content-right {
   padding: 40px 80px;
-  height: 100%;
   display: none;
 }
 
@@ -344,7 +343,7 @@ ul {
     width: 170px;
     position: absolute;
     bottom: -130%;
-    right: 0;
+    left: 0;
     background: #fff;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 5px;

@@ -11,7 +11,7 @@
 
 $(document).ready(function(){
 
-  var inputChat, searchInput, textSearch, listContacts;
+  var inputChat, searchInput, textSearch, listContacts, dropdownMenu;
 
 
   inputChat = $('input[name="input_text"]'); // salvo in una variabile il riferimento all'input di chat
@@ -20,6 +20,7 @@ $(document).ready(function(){
   searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
   listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
   console.log(listContacts);
+  dropdownMenu = '<ul class="dropdown-menu"><li>Info messaggio</li><li>Cancella messaggio</li></ul>'
 
 
   // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
@@ -31,14 +32,14 @@ $(document).ready(function(){
 
       // altrimenti inseriscilo nella finestra della conversazione
     } else {
-        $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:42</span>" + "</div>");
+        $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:42</span>" + dropdownMenu + "</div>");
 
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
 
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
-            $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:43</span>" + "</div>");
+            $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:43</span>" + dropdownMenu + "</div>");
         }, 1000);
     }
   }
@@ -118,6 +119,18 @@ $(document).ready(function(){
         }
       });
   });
+
+  // aggancio l'evento click all'icona "down" per far aprire il mneu-dropdown. Delego, però, l'evento click al primo "padre" creato staticamente, perchè l'icona è creata dinamicamente e non prenderebbe l'aggancio dell'evento.
+  $('.content-right').on("click", ".fa-chevron-down",
+    function(event) {
+      $(this).siblings("ul.dropdown-menu").slideToggle(); // quando l'icona viene cliccata seleziono suo "fratello" il menu-dropdown e gli dico di aprirsi e di chiudersi ricliccando sull'icona
+    });
+
+    // // cliccando da qualsiasi parte i menu dropdown si chiudono
+    // $(window).click(
+    //   function(){
+    //     $("ul.dropdown-menu").slideUp();
+    // });
 
   console.log($('.chat-contacts'));
 
