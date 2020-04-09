@@ -35,6 +35,11 @@ ul {
   cursor: pointer;
 }
 
+img {
+  width: 50px;
+  border-radius: 100%;
+}
+
 /*****************/
 
 
@@ -172,6 +177,8 @@ ul {
   right: 5px;
 }
 
+
+
 /*************************/
 
 
@@ -197,7 +204,6 @@ ul {
 }
 
 .img-container h3 {
-  margin-left: 15px;
   font-size: 16px;
 }
 
@@ -217,6 +223,20 @@ ul {
 }
 
 .avatar {
+  flex-shrink: 0;
+}
+
+.name-chat {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.name-chat small {
+  color: #B6B9BB;
+}
+
+.profile-img-container {
   flex-shrink: 0;
 }
 

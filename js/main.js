@@ -103,11 +103,17 @@ $(document).ready(function(){
   $('.chat-contacts li').click(
     function () {
       $(this).addClass("active-chat"); // diventerà attivo solo il contatto cliccato
-      $(this).siblings().removeClass("active-chat"); // gli altri contatti non saranno selezionati
+      $(this).siblings().removeClass("active-chat"); // gli altri contatti non saranno attivi
       var dataContact = $(this).data('name'); // salvo il valore del data-attribute del contatto cliccato
       console.log(dataContact);
       var containerChat = $('.content-right'); // salvo il riferimento a tutte le finestre di chat
       containerChat.removeClass("active"); // rimuovo la class active da tutte le finestre di chat
+      var profileImg = $(this).find('.img-container').html(); // salvo il contenuto html (quindi il tag che contiene l'immagine) del contenitore immagine di ogni contatto
+      console.log(profileImg);
+      $('.header-right').find('.img-container').find('.profile-img-container').html(profileImg); // sostituisco l'immagine del contatto che ha la chat aperta, con l'immagine del contatto selezionato
+      var titleContact = $(this).find('h3').text(); // salvo il testo del nome contatto cliccato
+      console.log(titleContact);
+      $('.header-right').find('.img-container').find('h3').text(titleContact); // sostituisco il nome del contatto che ha la finestra di chat aperta con il nome del contatto selezionato
       containerChat.each( // eseguo un ciclo sulle finestre di chat per estrapolare il valore del data-attribute ad ogni iterazione
         function () {
         var dataChat = $(this).data('name'); // salvo il valore del data-attribute della finestra di chat a quella iterazione
@@ -120,7 +126,7 @@ $(document).ready(function(){
       });
   });
 
-  // aggancio l'evento click all'icona "down" per far aprire il mneu-dropdown. Delego, però, l'evento click al primo "padre" creato staticamente, perchè l'icona è creata dinamicamente e non prenderebbe l'aggancio dell'evento.
+  // aggancio l'evento click all'icona "down" per far aprire il menu-dropdown. Delego, però, l'evento click al primo "padre" creato staticamente, perchè l'icona è creata dinamicamente e non prenderebbe l'aggancio dell'evento.
   $('.content-right').on("click", ".fa-chevron-down",
     function() {
       $(this).siblings("ul.dropdown-menu").slideToggle(); // quando l'icona viene cliccata seleziono suo "fratello" il menu-dropdown e gli dico di aprirsi e di chiudersi ricliccando sull'icona
