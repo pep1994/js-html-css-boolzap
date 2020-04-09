@@ -35,11 +35,14 @@ $(document).ready(function(){
         $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:42</span>" + dropdownMenu + "</div>");
 
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
-
+        var smallTitle = $('.name-chat').find('small').text(); // salvo il testo contenuto nel tag small sotto il nome del contatto che ha la chat aperte
+        $('.name-chat').find('small').text('Sta scrivendo...'); // sostituisco il testo con sta scrivendo... quando il messaggio viene inviato
+        console.log(smallTitle);
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
             $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>13:43</span>" + dropdownMenu + "</div>");
+            $('.name-chat').find('small').text(smallTitle); // il testo sta scrivendo... viene sostituito dal testo precedente
         }, 1000);
     }
   }
