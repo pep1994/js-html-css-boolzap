@@ -24,7 +24,6 @@ $(document).ready(function(){
 
 
 
-
   // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
   function messageSentAndReceveid (){
     var textInput = inputChat.val(); // salvo il valore dell'input in una variabile
@@ -139,13 +138,36 @@ $(document).ready(function(){
   $('.content-right').on("click", ".fa-chevron-down",
     function() {
       $(this).siblings("ul.dropdown-menu").slideToggle(); // quando l'icona viene cliccata seleziono suo "fratello" il menu-dropdown e gli dico di aprirsi e di chiudersi ricliccando sull'icona
-    });
+  });
 
     // aggancio l'evento click all'opzione "cancella messaggio" del dropdown-menu per cancellare il messaggio. Delego, però, l'evento click al primo "padre" creato staticamente, perchè il dropdown-menu è creato dinamicamente e non prenderebbe l'aggancio dell'evento.
     $('.content-right').on("click", ".remove-message",
       function() {
         $(this).parents('.chat').remove(); // cliccando l'opzione cancella messaggio, seleziono suo "padre" con la classe "chat", che sarebbe il messaggio, e lo elimino
-      });
+    });
+
+
+
+    //////////////////// BONUS ////////////////////////////
+
+    // aggancio l'evento scroll al container delle chat, in modo che quando scrolli appaia un link per rimandare all'inizio della chat
+    $('.container-chat-right').scroll(
+      function () {
+        $('.content-right.active .to-up').addClass('active'); // quando il container scrolla appare il link
+    });
+
+    // aggancio l'evento click al link, se cliccato la finestra di chat scrolla fino a ritornare all'inizio della chat
+    $('.to-up').click(
+      function(){
+        $('.container-chat-right').animate({
+          scrollTop: 0
+        }, 500 );
+    });
+
+
+
+
+
 
     // // cliccando da qualsiasi parte i menu dropdown si chiudono
     // $(window).click(

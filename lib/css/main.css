@@ -214,6 +214,8 @@ img {
 .content-right {
   padding: 40px 80px;
   display: none;
+  position: relative;
+  min-height: 100%;
 }
 
 .content-right::after {
@@ -355,6 +357,15 @@ img {
     outline: 0;
   }
 
+  .to-up {
+    text-decoration: none;
+    color: rgb(107, 115, 118);
+    position: absolute;
+    top: 98%;
+    right: 17px;
+    display: none;
+  }
+
   .active {
     display: block;
   }
@@ -382,6 +393,8 @@ img {
   .dropdown-menu li:hover {
     color: #E9EBEB;
   }
+
+
 /**********************/
 
 /* media query */
