@@ -11,7 +11,7 @@
 
 $(document).ready(function(){
 
-  var inputChat, searchInput, textSearch, listContacts, dropdownMenu;
+  var inputChat, searchInput, textSearch, listContacts, dropdownMenuS, dropdownMenuR;
 
 
   inputChat = $('input[name="input_text"]'); // salvo in una variabile il riferimento all'input di chat
@@ -20,8 +20,16 @@ $(document).ready(function(){
   searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
   listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
   console.log(listContacts);
-  dropdownMenu = '<ul class="dropdown-menu"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu da inserire nei messaggi inviati e ricevuti
+  dropdownMenuS = '<ul class="dropdown-menu s"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi mandati da inserire nei messaggi inviati e ricevuti
+  dropdownMenuR = '<ul class="dropdown-menu r"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi ricevuti da inserire nei messaggi inviati e ricevuti
 
+
+  // funzione che aggiunge uno zero all'inizio del numero
+  function addZero(number) {
+    if (number < 10) {
+      number = '0' + number;
+    }
+  }
 
   // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
   function messageSentAndReceveid (){
@@ -31,9 +39,8 @@ $(document).ready(function(){
     var minutes = date.getMinutes(); // salvo i minuti
 
     // siccome i minuti inferiori a 10 vengono stmapati senza lo zero davanti creo una condizione che mette uno zero prima del numero
-    if (minutes < 10) {
-      minutes = '0' + minutes;
-    }
+
+    addZero(minutes);
 
     var time = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
 
@@ -42,7 +49,7 @@ $(document).ready(function(){
 
       // altrimenti inseriscilo nella finestra della conversazione
     } else {
-        $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenu + "</div>");
+        $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenuS + "</div>");
 
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
 
@@ -52,7 +59,7 @@ $(document).ready(function(){
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
-            $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenu + "</div>");
+            $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenuR + "</div>");
             $('.name-chat').find('small').text("Ultimo accesso oggi alle " + time); // il testo sta scrivendo... viene sostituito dal testo precedente più l'ora dell'invio del suo messaggio
             $('li.active-chat .chat-time').text(time); // l'ora dell'ultimo messaggio inviato viene messa anche nel riquadro del contatto
             var textLastMsgReceveid = $('.content-right.active .chat-receveid:last p').text(); // salvo l'ultimo messaggio scritto dal contatto
@@ -172,6 +179,49 @@ $(document).ready(function(){
         $('.container-chat-right').animate({
           scrollTop: 0
         }, 500 );
+    });
+
+    // aggancio l'evento click alla finestra di chat che delega l'evento all'opzione info messaggio del dropdown-menu dei messaggi inviati da me
+    $('.content-right').on("click", ".dropdown-menu.s .info-message",
+      function() {
+        var date = new Date(); // creo una variabile che ha in memoria la data completa
+        var minutes = date.getMinutes(); // salvo i minuti
+
+        addZero(minutes);
+
+        var timeMsg = $(this).parent().siblings('.message-time').text(); // salvo l'orario del messaggio scritto da me
+        console.log(timeMsg);
+
+        $('.info-container').fadeIn(); // la finestra delle info compare
+        $('.dropdown-menu.s').fadeOut(); // scompare il dropdown-menu
+        $('.info-container .title-name-msg').text("Il messaggio è stato inviato da: Marco"); // aggiungo testo
+        $('.info-container .title-time-msg').text("Il messaggio è stato inviato alle ore: " + timeMsg); // aggiungo l'ora di invio messaggio
+
+    });
+
+    // aggancio l'evento click alla finestra di chat che delega l'evento all'opzione info messaggio del dropdown-menu dei messaggi ricevuti dai contatti
+    $('.content-right').on("click", ".dropdown-menu.r .info-message",
+      function() {
+        var date = new Date(); // creo una variabile che ha in memoria la data completa
+        var minutes = date.getMinutes(); // salvo i minuti
+
+        addZero(minutes);
+
+        var timeMsg = $(this).parent().siblings('.message-time').text(); // salvo l'orario del messaggio scritto da me
+        console.log(timeMsg);
+        var nameContact = $('.chat-contacts li.active-chat').find('h3').text(); // salvo il nome del contatto attivo
+        console.log(nameContact);
+
+        $('.info-container').fadeIn(); // la finestra delle info compare
+        $('.dropdown-menu.r').fadeOut(); // scompare il dropdown-menu
+        $('.info-container .title-name-msg').text("Il messaggio è stato inviato da: " + nameContact); // aggiungo il nome del contatto che ha inviato il messaggio
+        $('.info-container .title-time-msg').text("Il messaggio è stato inviato alle ore: " + timeMsg); // aggiungo l'ora di invio messaggio
+
+    });
+
+    // aggancio l'evento all'icona "X". Al click la finestra di info viene chiusa
+    $('.close').click(function(){
+      $('.info-container').hide();
     });
 
 
