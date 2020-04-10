@@ -467,7 +467,7 @@ img {
     height: calc(100% - 200px - 50px);
   }
 
-  .chat-contacts img {
+  img {
     width: 30px;
     border-radius: 100%;
   }
@@ -478,6 +478,14 @@ img {
 
   h3 {
     font-size: 13px;
+  }
+
+  .header-right {
+    padding: 10px;
+  }
+
+  .img-container {
+    padding: 0;
   }
 
   .img-container h3 {
@@ -513,6 +521,7 @@ img {
     position: relative;
     justify-content: center;
     padding: 10px;
+    height: auto;
   }
 
   .chat-time {
@@ -523,7 +532,8 @@ img {
 
   .name-contact {
     flex-basis: calc(100% - 40px);
-    margin-left: 10px;
+    margin-left: 0;
+    text-align: center;
   }
 
   .header-left {

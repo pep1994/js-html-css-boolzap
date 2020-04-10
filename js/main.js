@@ -78,6 +78,7 @@ $(document).ready(function(){
       function(){
         $('.microphone').hide();
         $('.plane').show();
+        $('.info-container').fadeOut(); // si chiude la finestra di info eventualmente aperta
       },
     // se l'utente ha premuto il tasto invio mentre era sull'input richiama la funzione di invio e ricezione messaggio
     keyup:
@@ -139,6 +140,7 @@ $(document).ready(function(){
       var titleContact = $(this).find('h3').text(); // salvo il testo del nome contatto cliccato
       console.log(titleContact);
       $('.header-right').find('.img-container').find('h3').text(titleContact); // sostituisco il nome del contatto che ha la finestra di chat aperta con il nome del contatto selezionato
+      $('.info-container').fadeOut(); // si chiude la finestra di info eventualmente aperta
       containerChat.each( // eseguo un ciclo sulle finestre di chat per estrapolare il valore del data-attribute ad ogni iterazione
         function () {
         var dataChat = $(this).data('name'); // salvo il valore del data-attribute della finestra di chat a quella iterazione
@@ -153,7 +155,8 @@ $(document).ready(function(){
 
   // aggancio l'evento click all'icona "down" per far aprire il menu-dropdown. Delego, però, l'evento click al primo "padre" creato staticamente, perchè l'icona è creata dinamicamente e non prenderebbe l'aggancio dell'evento.
   $('.content-right').on("click", ".fa-chevron-down",
-    function() {
+    function(e) {
+      e.stopPropagation();
       $(this).siblings("ul.dropdown-menu").slideToggle(); // quando l'icona viene cliccata seleziono suo "fratello" il menu-dropdown e gli dico di aprirsi e di chiudersi ricliccando sull'icona
   });
 
@@ -225,15 +228,11 @@ $(document).ready(function(){
     });
 
 
-
-
-
-
-    // // cliccando da qualsiasi parte i menu dropdown si chiudono
-    // $(window).click(
-    //   function(){
-    //     $("ul.dropdown-menu").slideUp();
-    // });
+    // cliccando da qualsiasi parte i menu dropdown si chiudono
+    $(window).click(
+      function(){
+        $("ul.dropdown-menu").slideUp();
+    });
 
 
 
