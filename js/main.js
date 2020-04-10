@@ -23,13 +23,18 @@ $(document).ready(function(){
   dropdownMenu = '<ul class="dropdown-menu"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu da inserire nei messaggi inviati e ricevuti
 
 
-
   // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
   function messageSentAndReceveid (){
     var textInput = inputChat.val(); // salvo il valore dell'input in una variabile
     var date = new Date(); // creo una variabile che ha in memoria la data completa
     var hours = date.getHours(); // salvo l'ora
     var minutes = date.getMinutes(); // salvo i minuti
+
+    // siccome i minuti inferiori a 10 vengono stmapati senza lo zero davanti creo una condizione che mette uno zero prima del numero
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
     var time = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
 
     // se il messaggio è vuoto non fare nulla
@@ -43,11 +48,16 @@ $(document).ready(function(){
 
         $('.name-chat').find('small').text('Sta scrivendo...'); // sostituisco il testo con sta scrivendo... quando il messaggio viene inviato
 
+
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
             $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenu + "</div>");
             $('.name-chat').find('small').text("Ultimo accesso oggi alle " + time); // il testo sta scrivendo... viene sostituito dal testo precedente più l'ora dell'invio del suo messaggio
+            $('li.active-chat .chat-time').text(time); // l'ora dell'ultimo messaggio inviato viene messa anche nel riquadro del contatto
+            var textLastMsgReceveid = $('.content-right.active .chat-receveid:last p').text(); // salvo l'ultimo messaggio scritto dal contatto
+            console.log(textLastMsgReceveid);
+            $('li.active-chat .name-contact small').text(textLastMsgReceveid); // riporto l'ultimo messaggio scritto dal contatto nel riqudro del contatto
         }, 1000);
     }
   }
