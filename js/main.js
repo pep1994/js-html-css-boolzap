@@ -9,6 +9,8 @@
 // è possibile inserire nuovi messaggi per ogni conversazione
 // Cancella messaggio: cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
 
+// aggiunta bonus
+
 $(document).ready(function(){
 
   var inputChat, searchInput, textSearch, listContacts, dropdownMenuS, dropdownMenuR;
@@ -18,12 +20,11 @@ $(document).ready(function(){
   searchInput = $('#search'); // salvo il riferimento all'input di ricerca contatti
   searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
   listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
-  console.log(listContacts);
   dropdownMenuS = '<ul class="dropdown-menu s"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi mandati da inserire nei messaggi inviati e ricevuti
   dropdownMenuR = '<ul class="dropdown-menu r"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi ricevuti da inserire nei messaggi inviati e ricevuti
 
 
-  // funzione che aggiunge uno zero all'inizio del numero
+  // funzione che aggiunge uno zero all'inizio del numero, perchè quando i minuti sono inferiori a 10 viene stampato per esempio 3 e non 03, dando l'impressione di significare 30 minuti invece di 3 minuti
   function addZero(number) {
     if (number < 10) {
       number = '0' + number;
@@ -37,8 +38,7 @@ $(document).ready(function(){
     var hours = date.getHours(); // salvo l'ora
     var minutes = date.getMinutes(); // salvo i minuti
 
-    // siccome i minuti inferiori a 10 vengono stmapati senza lo zero davanti creo una condizione che mette uno zero prima del numero
-
+    // siccome i minuti inferiori a 10 vengono stmapati senza lo zero davanti, richiamo la funzione che esegue questa operazione
     addZero(minutes);
 
     var time = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
@@ -188,6 +188,19 @@ $(document).ready(function(){
 
     }
 
+    // aggancio il click all'icona emoji in modo che si apra la selezione delle emoji
+    $('.left-footer').click(
+      function(){
+
+        // cliccando sulla faccina se non è visibile il container delle emoji verrà visualizzato, se è presesente verrà nascosto
+        $('.emoji-container').toggleClass('emoji-flex');
+
+        // cliccando sulla faccina se il container non ha la classe verrà aggiunta, ricliccando se ha la classe verrà rimossa
+        $('.container-chat-right').toggleClass("height-change-emoji");
+
+    });
+
+
     // aggancio il click alle emoji tramite la delega di suo "padre"
     $('.emoji-container').on('click', '.emoji',
       function(){
@@ -226,7 +239,7 @@ $(document).ready(function(){
         var date = new Date(); // creo una variabile che ha in memoria la data completa
         var minutes = date.getMinutes(); // salvo i minuti
 
-        addZero(minutes);
+        addZero(minutes); // richiamo la funzione per aggiungere uno zero prima dei minuti in casa fossero meno di 10
 
         var timeMsg = $(this).parent().siblings('.message-time').text(); // salvo l'orario del messaggio scritto da me
         console.log(timeMsg);
@@ -244,7 +257,7 @@ $(document).ready(function(){
         var date = new Date(); // creo una variabile che ha in memoria la data completa
         var minutes = date.getMinutes(); // salvo i minuti
 
-        addZero(minutes);
+        addZero(minutes); // richiamo la funzione per aggiungere uno zero prima dei minuti in casa fossero meno di 10
 
         var timeMsg = $(this).parent().siblings('.message-time').text(); // salvo l'orario del messaggio scritto da me
         console.log(timeMsg);
@@ -268,18 +281,6 @@ $(document).ready(function(){
     $(window).click(
       function(){
         $("ul.dropdown-menu").slideUp();
-    });
-
-    // aggancio il click all'icona emoji in modo che si apra la selezione delle emoji
-    $('.left-footer').click(
-      function(){
-
-        // cliccando sulla faccina se non è visibile il container delle emoji verrà visualizzato, se è presesente verrà nascosto
-        $('.emoji-container').toggleClass('emoji-flex');
-
-        // cliccando sulla faccina se il container non ha la classe verrà aggiunta, ricliccando se ha la classe verrà rimossa
-        $('.container-chat-right').toggleClass("height-change-emoji");
-
     });
 
 });
