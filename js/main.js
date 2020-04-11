@@ -13,7 +13,6 @@ $(document).ready(function(){
 
   var inputChat, searchInput, textSearch, listContacts, dropdownMenuS, dropdownMenuR;
 
-
   inputChat = $('input[name="input_text"]'); // salvo in una variabile il riferimento all'input di chat
   inputChat.val(""); // imposto di default il valore vuoto per l'input di chat
   searchInput = $('#search'); // salvo il riferimento all'input di ricerca contatti
@@ -54,7 +53,7 @@ $(document).ready(function(){
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
 
         $('.name-chat').find('small').text('Sta scrivendo...'); // sostituisco il testo con sta scrivendo... quando il messaggio viene inviato
-        
+
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
@@ -64,12 +63,14 @@ $(document).ready(function(){
             var textLastMsgReceveid = $('.content-right.active .chat-receveid:last p').text(); // salvo l'ultimo messaggio scritto dal contatto
             console.log(textLastMsgReceveid);
             $('li.active-chat .name-contact small').text(textLastMsgReceveid); // riporto l'ultimo messaggio scritto dal contatto nel riqudro del contatto
+
+            // bonus
             var containerHeight =  $('.content-right.active').innerHeight(); // salvo l'altezza totale della finestra di chat ogni volta che viene inviato un messaggio
             // il container di chat scrolla per tutta l'altezza della finestra di chat, la quale aumeterà gradualmente con i messaggi inseriti
             $('.container-chat-right').animate({
               scrollTop: containerHeight
 
-            }, 500 );
+            }, 700 );
 
         }, 1000);
     }
@@ -176,6 +177,35 @@ $(document).ready(function(){
 
     //////////////////// BONUS ////////////////////////////
 
+    // creo un array di emoji
+    var emoji = ['&#128512','&#128513','&#128514','&#128515','&#128516','&#128517','&#128518','&#128519','&#128519','&#128520','&#128521','&#128522','&#128523','&#128524','&#128525','&#128526','&#128527','&#128528','&#128529','&#128530','&#128531','&#128532', '&#128533','&#128534','&#128535','&#128536','&#128537','&#128538','&#128539','&#128540','&#128541','&#128542','&#128543','&#128544','&#128545','&#128546','&#128547','&#128548','&#128549','&#128550','&#128551','&#128552','&#128553','&#128554','&#128555','&#128556','&#128557','&#128558','&#128559','&#128560','&#128561','&#128562','&#128563','&#128564','&#128565','&#128566','&#128567','&#128577','&#128578','&#128579','&#128580','&#129297','&#129298','&#129299','&#129300','&#129301','&#129312','&#129313','&#129314','&#129315','&#129316','&#129317','&#129319','&#129320','&#129321','&#129322','&#129323','&#129324','&#129325','&#129326','&#129327','&#129488','&#9757','&#9977','&#9994','&#9995','&#9996','&#9997','&#127877','&#127938','&#127939','&#127940','&#127943','&#127946','&#127947','&#127948','&#128066','&#128067','&#128070','&#128071','&#128072','&#128073','&#128074','&#128075','&#128076','&#128077','&#128078','&#128079','&#128080','&#128102','&#128103','&#128104','&#128105','&#128110','&#128112','&#128113','&#128114','&#128115','&#128116','&#128117','&#128118','&#128119','&#128120','&#128124','&#128129','&#128130','&#128131','&#128133','&#128134','&#128135','&#128170','&#128372','&#128373','&#128378','&#128400','&#128405','&#128406','&#128581','&#128582','&#128583','&#128587','&#128588','&#128589','&#128590','&#128591','&#128675','&#128692','&#128693','&#128694','&#128704','&#128716','&#129304','&#129305','&#129306','&#129307','&#129308','&#129309','&#129310','&#129311','&#129318','&#129328','&#129329','&#129330','&#129331','&#129332','&#129333','&#129334','&#129335','&#129336','&#129337','&#129341','&#129342','&#129489','&#129490','&#129491','&#129492','&#129493','&#129494','&#129495','&#129496','&#129497','&#129498','&#129500','&#129501'];
+
+
+    // creo dei div con all'interno l'emoji
+    for (var i = 0; i < emoji.length; i++) {
+
+      $('.emoji-container').append('<div class="emoji">' + emoji[i] + '</div>');
+
+    }
+
+    // aggancio il click alle emoji tramite la delega di suo "padre"
+    $('.emoji-container').on('click', '.emoji',
+      function(){
+        var textEmoji = $(this).text(); // salvo l'emoji contenuta nel div
+        console.log(textEmoji);
+        var valInput = $('#chat-input').val(); // salvo il valore dell'input
+        console.log(valInput);
+        var beforeCursor = valInput.substring(0, $('#chat-input')[0].selectionStart); // estrapolo dal valore dell'input i caratteri prima del posizionamento del cursore
+        console.log(beforeCursor);
+        var afterCursor = valInput.substring($('#chat-input')[0].selectionEnd, valInput.length); // estrapolo dal valore dell'input i caratteri dopo il posizionamento del cursore
+         console.log(afterCursor);
+        // il valore dell'input diventerà: i caratteri prima del cursore, l'emoji che ho cliccato e infine i caratteri estrapolati dopo il cursore. Così facendo posso posizionare le emoji dove vogli all'interno del messaggio da inviare
+        $('#chat-input').val(beforeCursor + textEmoji + afterCursor);
+        // al click su una emoji l'input prende il focus
+        $('#chat-input').focus();
+    });
+
+
     // aggancio l'evento scroll al container delle chat, in modo che quando scrolli appaia un link per rimandare all'inizio della chat
     $('.container-chat-right').scroll(
       function () {
@@ -187,7 +217,7 @@ $(document).ready(function(){
       function(){
         $('.container-chat-right').animate({
           scrollTop: 0
-        }, 500 );
+        }, 700 );
     });
 
     // aggancio l'evento click alla finestra di chat che delega l'evento all'opzione info messaggio del dropdown-menu dei messaggi inviati da me
@@ -240,35 +270,16 @@ $(document).ready(function(){
         $("ul.dropdown-menu").slideUp();
     });
 
+    // aggancio il click all'icona emoji in modo che si apra la selezione delle emoji
+    $('.left-footer').click(
+      function(){
 
+        // cliccando sulla faccina se non è visibile il container delle emoji verrà visualizzato, se è presesente verrà nascosto
+        $('.emoji-container').toggleClass('emoji-flex');
 
-  // aggancio l'evento tastiera alla sezione dei contatti. Quando viene premuto il tasto freccia in giù la selezione del contatto si sposterà di conseguenza, stesso discorso per la freccia in su
-  // $('.chat-contacts').keydown(
-  //   function (event) {
-  //     var itemActive = $('li.active');
-  //     console.log(event.which);
-  //     console.log(event.target);
-  //     if (event.which == 40) {
-  //       itemActive.removeClass("active");
-  //       itemActive.next().addClass("active");
-  //     }
-  //
-  //     if (event.which == 38) {
-  //       itemActive.removeClass("active");
-  //       itemActive.prev().addClass("active");
-  //     }
-  //
-  //     if (event.which == 40 && itemActive.hasClass('last')) {
-  //       itemActive.removeClass("active");
-  //       $('li.first').addClass("active");
-  //     }
-  //
-  //     if (event.which == 38 && itemActive.hasClass('first')) {
-  //       itemActive.removeClass("active");
-  //       $('li.last').addClass("active");
-  //     }
-  // });
+        // cliccando sulla faccina se il container non ha la classe verrà aggiunta, ricliccando se ha la classe verrà rimossa
+        $('.container-chat-right').toggleClass("height-change-emoji");
 
-
+    });
 
 });
