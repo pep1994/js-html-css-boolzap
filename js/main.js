@@ -54,8 +54,7 @@ $(document).ready(function(){
         inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
 
         $('.name-chat').find('small').text('Sta scrivendo...'); // sostituisco il testo con sta scrivendo... quando il messaggio viene inviato
-
-
+        
         // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
         setTimeout(
           function () {
@@ -65,6 +64,13 @@ $(document).ready(function(){
             var textLastMsgReceveid = $('.content-right.active .chat-receveid:last p').text(); // salvo l'ultimo messaggio scritto dal contatto
             console.log(textLastMsgReceveid);
             $('li.active-chat .name-contact small').text(textLastMsgReceveid); // riporto l'ultimo messaggio scritto dal contatto nel riqudro del contatto
+            var containerHeight =  $('.content-right.active').innerHeight(); // salvo l'altezza totale della finestra di chat ogni volta che viene inviato un messaggio
+            // il container di chat scrolla per tutta l'altezza della finestra di chat, la quale aumeterà gradualmente con i messaggi inseriti
+            $('.container-chat-right').animate({
+              scrollTop: containerHeight
+
+            }, 500 );
+
         }, 1000);
     }
   }

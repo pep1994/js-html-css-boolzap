@@ -298,7 +298,6 @@ img {
     background: url(../../img/Sfondo.jpg);
     background-position: center;
     overflow-y: scroll;
-    position: relative;
   }
 
  .chat-sent {
@@ -370,7 +369,7 @@ img {
     text-decoration: none;
     color: rgb(107, 115, 118);
     position: absolute;
-    top: 98%;
+    top: 100%;
     right: 17px;
     display: none;
   }
