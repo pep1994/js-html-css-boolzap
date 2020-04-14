@@ -154,6 +154,13 @@ $(document).ready(function(){
         $("ul.dropdown-menu").slideUp();
     });
 
+    // cliccando sul link attiva notifiche, la campanellina con lo slah scompare e appare la campanellina normale. Inoltre il testo del link diventa "disattiva le notifiche desktop". Ricliccando sul link scompare il testo disattiva notifiche e riappare quello di prima, scompare la campanellina senza slash e riappare quella con lo slash
+    $('.bell-title').find('a').click(function(){
+      $('.note-off').toggle();
+      $('.note-on').toggle();
+      $('.fa.fa-bell-slash').toggle();
+      $('.fas.fa-bell ').toggle();
+    });
 
     /////////////////////////////////////// FUNZIONI //////////////////////////////////////////////
 

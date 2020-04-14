@@ -97,6 +97,14 @@ img {
   color: #8EDAFC;
 }
 
+.fas.fa-bell {
+  display: none;
+}
+
+.note-off {
+  display: none;
+}
+
 .bell-title {
   margin-left: 10px;
 }
