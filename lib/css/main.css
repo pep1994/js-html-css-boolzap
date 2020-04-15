@@ -335,8 +335,8 @@ img {
     background-color: #D5F9BA;
     border-radius: 10px;
     float: right;
-    min-width: 20%;
-    max-width: 55%;
+    min-width: 17%;
+    max-width: 70%;
     padding: 20px;
     position: relative;
     clear: both;
@@ -355,8 +355,8 @@ img {
     background-color: #fff;
     border-radius: 10px;
     float: left;
-    min-width: 15%;
-    max-width: 55%;
+    min-width: 17%;
+    max-width: 70%;
     padding: 20px;
     position: relative;
     clear: both;
@@ -412,7 +412,7 @@ img {
   .dropdown-menu {
     width: 170px;
     position: absolute;
-    bottom: -130%;
+    bottom: -80px;
     background: #fff;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
