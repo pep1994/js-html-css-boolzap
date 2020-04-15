@@ -26,6 +26,40 @@ $(document).ready(function(){
   // creo un array di emoji
   var emoji = ['&#128512','&#128513','&#128514','&#128515','&#128516','&#128517','&#128518','&#128519','&#128519','&#128520','&#128521','&#128522','&#128523','&#128524','&#128525','&#128526','&#128527','&#128528','&#128529','&#128530','&#128531','&#128532', '&#128533','&#128534','&#128535','&#128536','&#128537','&#128538','&#128539','&#128540','&#128541','&#128542','&#128543','&#128544','&#128545','&#128546','&#128547','&#128548','&#128549','&#128550','&#128551','&#128552','&#128553','&#128554','&#128555','&#128556','&#128557','&#128558','&#128559','&#128560','&#128561','&#128562','&#128563','&#128564','&#128565','&#128566','&#128567','&#128577','&#128578','&#128579','&#128580','&#129297','&#129298','&#129299','&#129300','&#129301','&#129312','&#129313','&#129314','&#129315','&#129316','&#129317','&#129319','&#129320','&#129321','&#129322','&#129323','&#129324','&#129325','&#129326','&#129327','&#129488','&#9757','&#9977','&#9994','&#9995','&#9996','&#9997','&#127877','&#127938','&#127939','&#127940','&#127943','&#127946','&#127947','&#127948','&#128066','&#128067','&#128070','&#128071','&#128072','&#128073','&#128074','&#128075','&#128076','&#128077','&#128078','&#128079','&#128080','&#128102','&#128103','&#128104','&#128105','&#128110','&#128112','&#128113','&#128114','&#128115','&#128116','&#128117','&#128118','&#128119','&#128120','&#128124','&#128129','&#128130','&#128131','&#128133','&#128134','&#128135','&#128170','&#128372','&#128373','&#128378','&#128400','&#128405','&#128406','&#128581','&#128582','&#128583','&#128587','&#128588','&#128589','&#128590','&#128591','&#128675','&#128692','&#128693','&#128694','&#128704','&#128716','&#129304','&#129305','&#129306','&#129307','&#129308','&#129309','&#129310','&#129311','&#129318','&#129328','&#129329','&#129330','&#129331','&#129332','&#129333','&#129334','&#129335','&#129336','&#129337','&#129341','&#129342','&#129489','&#129490','&#129491','&#129492','&#129493','&#129494','&#129495','&#129496','&#129497','&#129498','&#129500','&#129501', '&#128000','&#128001','&#128002','&#128003','&#128004','&#128005','&#128006','&#128007','&#128008','&#128010','&#128011','&#128012','&#128013','&#128014','&#128015','&#128016','&#128017','&#128018','&#128019','&#128020','&#128021','&#128022','&#128023','&#128024','&#128025','&#128026','&#128027','&#128028','&#128029','&#128030','&#128031','&#128032','&#128033','&#128034','&#128035','&#128036','&#128037','&#128038','&#128039','&#128040','&#128041','&#128042','&#128043','&#128044','&#128045','&#128046','&#128047','&#128048','&#128049','&#128050','&#128051','&#128052','&#128053','&#128054','&#128055','&#128056','&#128057','&#128058','&#128059','&#128060','&#128061','&#128062','&#128063'];
 
+  // creo un array di risposte per messaggi di risposta chat presenti già di default
+  var randomChat = ['Ciao, sono in formissima 💪', 'Ciao, purtroppo non benissmo 🤒', 'Ti avevo detto di non scrivermi più! 🤬'];
+
+  // chiamo la funzione date per stampare nei messaggi l'ora in cui viene caricata la pagina
+  var time = date();
+
+  // variabili handlebars
+  var targetHtml = $('#chat-template').html();
+  var template = Handlebars.compile(targetHtml);
+
+  // oggetto handlebars per chat inviata da me presente di default
+  var contextSent = {
+    typeChat: "chat-sent",
+    textChat: "Ciao, come stai?",
+    time: time,
+    typeDropDownMenu: "s"
+  }
+  var contentHtmlS = template(contextSent);
+
+
+  // per ogni finestra di chat aggiungo un messaggio di invio e una risposta che quindi saranno presenti in pagina di default. La creazione del messaggio di risposta la faccio dentro al ciclo così ogni volta viene generata una risposta random, altrimenti le risposte sarebbero tutte uguali
+  $('.content-right').each(function () {
+
+    // oggetto handlebars per chat di risposta presente di default. Ad ogni iterazione verrà scelta una risposta in maniera random
+    var contextReceveid = {
+      typeChat: "chat-receveid",
+      textChat: randomChat[Math.floor(Math.random() * randomChat.length)],
+      time: time,
+      typeDropDownMenu: "r"
+    }
+    var contentHtmlR = template(contextReceveid);
+    $(this).append(contentHtmlS + contentHtmlR);
+  });
+
 
 
   // aggancio gli eventi focus e tastiera all'input di chat
@@ -165,25 +199,32 @@ $(document).ready(function(){
     /////////////////////////////////////// FUNZIONI //////////////////////////////////////////////
 
 
-    // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
-    function messageSentAndReceveid (){
-      var textInput = inputChat.val(); // salvo il valore dell'input in una variabile
+    // funzione che crea una stringa con l'ora e i minuti in quel momento che si richiama
+    function date (){
+
+
       var date = new Date(); // creo una variabile che ha in memoria la data completa
       var hours = date.getHours(); // salvo l'ora
       var minutes = date.getMinutes(); // salvo i minuti
-
-
 
       // condizione che aggiunge uno zero all'inizio del numero, se questo è inferiore a 10
       if (minutes < 10) {
         minutes = '0' + minutes;
       }
 
-      var time = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
+      var hM = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
 
-      // variabili handlebars
-      var targetHtml = $('#chat-template').html();
-      var template = Handlebars.compile(targetHtml);
+      return hM;
+    }
+
+
+    // funzione che invia il messaggio che inserisce l'utente e riceve la risposta da parte del PC dopo un secondo
+    function messageSentAndReceveid (){
+      var textInput = inputChat.val(); // salvo il valore dell'input in una variabile
+
+      // richiamo la funzione date
+      var time = date();
+
 
       // oggetto handlebars per chat inviata da me
       var contextSent = {
@@ -194,7 +235,7 @@ $(document).ready(function(){
       }
       var contentHtmlS = template(contextSent);
 
-      
+
       // oggetto handlebars per chat di risposta
       var contextReceveid = {
         typeChat: "chat-receveid",
@@ -222,7 +263,7 @@ $(document).ready(function(){
               $('.name-chat').find('small').text("Ultimo accesso oggi alle " + time); // il testo sta scrivendo... viene sostituito dal testo precedente più l'ora dell'invio del suo messaggio
               $('li.active-chat .chat-time').text(time); // l'ora dell'ultimo messaggio inviato viene messa anche nel riquadro del contatto
               var textLastMsgReceveid = $('.content-right.active .chat-receveid:last p').text(); // salvo l'ultimo messaggio scritto dal contatto
-              console.log(textLastMsgReceveid);
+
               $('li.active-chat .name-contact small').text(textLastMsgReceveid); // riporto l'ultimo messaggio scritto dal contatto nel riqudro del contatto
 
               // bonus scroll
@@ -241,17 +282,22 @@ $(document).ready(function(){
     function chatContactActive () {
       $(this).addClass("active-chat"); // diventerà attivo solo il contatto cliccato
       $(this).siblings().removeClass("active-chat"); // gli altri contatti non saranno attivi
+
       var dataContact = $(this).data('name'); // salvo il valore del data-attribute del contatto cliccato
-      console.log(dataContact);
+
       var containerChat = $('.content-right'); // salvo il riferimento a tutte le finestre di chat
+
       containerChat.removeClass("active"); // rimuovo la class active da tutte le finestre di chat
+
       var profileImg = $(this).find('.img-container').html(); // salvo il contenuto html (quindi il tag che contiene l'immagine) del contenitore immagine di ogni contatto
-      console.log(profileImg);
+
       $('.header-right').find('.img-container').find('.profile-img-container').html(profileImg); // sostituisco l'immagine del contatto che ha la chat aperta, con l'immagine del contatto selezionato
       var titleContact = $(this).find('h3').text(); // salvo il testo del nome contatto cliccato
-      console.log(titleContact);
+
       $('.header-right').find('.img-container').find('h3').text(titleContact); // sostituisco il nome del contatto che ha la finestra di chat aperta con il nome del contatto selezionato
       $('.info-container').fadeOut(); // si chiude la finestra di info eventualmente aperta
+      var timeMsg = $(this).find('.chat-time').text(); // salvo in una variabile l'oarario dell'ultimo accesso del contatto cliccato
+      $('.header-right').find('.name-chat').find('small').text('Ultimo accesso oggi alle ' + timeMsg); // riporto l'ora dell'ultimo accesso del contatto nella sua rispettiva finestra di chat
       containerChat.each( // eseguo un ciclo sulle finestre di chat per estrapolare il valore del data-attribute ad ogni iterazione
         function () {
         var dataChat = $(this).data('name'); // salvo il valore del data-attribute della finestra di chat a quella iterazione
@@ -259,7 +305,7 @@ $(document).ready(function(){
         // se il data-attribute del contatto cliccato corrisponde a quello della finestra di chat allora mostrami quella finestra di chat, altrimenti tienimela nascosta
         if (dataContact === dataChat) {
           $(this).addClass('active');
-          console.log(dataChat);
+
         }
       });
     }
@@ -267,11 +313,8 @@ $(document).ready(function(){
 
     // funzione che mostra le info del messaggio inviato
     function infoMsgSent() {
-      var date = new Date(); // creo una variabile che ha in memoria la data completa
-      var minutes = date.getMinutes(); // salvo i minuti
 
       var timeMsg = $(this).parent().siblings('.message-time').text(); // salvo l'orario del messaggio scritto da me
-      console.log(timeMsg);
 
       $('.info-container').fadeIn(); // la finestra delle info compare
       $('.dropdown-menu.s').fadeOut(); // scompare il dropdown-menu
@@ -282,13 +325,11 @@ $(document).ready(function(){
 
     // funzione che mostra le info del messaggio ricevuto
     function infoMsgReceveid () {
-      var date = new Date(); // creo una variabile che ha in memoria la data completa
-      var minutes = date.getMinutes(); // salvo i minuti
 
       var timeMsg = $(this).parent().siblings('.message-time').text(); // salvo l'orario del messaggio scritto da me
-      console.log(timeMsg);
+
       var nameContact = $('.chat-contacts li.active-chat').find('h3').text(); // salvo il nome del contatto attivo
-      console.log(nameContact);
+
 
       $('.info-container').fadeIn(); // la finestra delle info compare
       $('.dropdown-menu.r').fadeOut(); // scompare il dropdown-menu
