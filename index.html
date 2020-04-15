@@ -591,6 +591,28 @@
     </div>
     <!-- fine contenuto principale -->
 
+
+
+    <!-- Template messaggio di chat -->
+    <script id="chat-template" type="text/x-handlebars-template">
+      <div class='chat {{typeChat}}'>
+        <p class='text-message'>{{textChat}}</p>
+        <i class='fa fa-chevron-down'></i>
+        <span class='message-time'> {{time}}  </span>
+        <ul class="dropdown-menu {{typeDropDownMenu}}">
+          <li class="info-message">Info messaggio</li>
+          <li class="remove-message">Cancella messaggio</li>
+        </ul>
+      </div>
+    </script>
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </body>

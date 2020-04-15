@@ -20,8 +20,8 @@ $(document).ready(function(){
   searchInput = $('#search'); // salvo il riferimento all'input di ricerca contatti
   searchInput.val(""); // imposto di default il valore vuoto per l'input di ricerca contatti
   listContacts = $('.chat-contacts li'); // salvo la selezione di tutti i contatti
-  dropdownMenuS = '<ul class="dropdown-menu s"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi mandati da inserire nei messaggi inviati e ricevuti
-  dropdownMenuR = '<ul class="dropdown-menu r"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi ricevuti da inserire nei messaggi inviati e ricevuti
+  // dropdownMenuS = '<ul class="dropdown-menu s"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi mandati da inserire nei messaggi inviati e ricevuti
+  // dropdownMenuR = '<ul class="dropdown-menu r"><li class="info-message">Info messaggio</li><li class="remove-message">Cancella messaggio</li></ul>'; // salvo in una variabile il codice html rappresentante il dropdown-menu dei messaggi ricevuti da inserire nei messaggi inviati e ricevuti
 
   // creo un array di emoji
   var emoji = ['&#128512','&#128513','&#128514','&#128515','&#128516','&#128517','&#128518','&#128519','&#128519','&#128520','&#128521','&#128522','&#128523','&#128524','&#128525','&#128526','&#128527','&#128528','&#128529','&#128530','&#128531','&#128532', '&#128533','&#128534','&#128535','&#128536','&#128537','&#128538','&#128539','&#128540','&#128541','&#128542','&#128543','&#128544','&#128545','&#128546','&#128547','&#128548','&#128549','&#128550','&#128551','&#128552','&#128553','&#128554','&#128555','&#128556','&#128557','&#128558','&#128559','&#128560','&#128561','&#128562','&#128563','&#128564','&#128565','&#128566','&#128567','&#128577','&#128578','&#128579','&#128580','&#129297','&#129298','&#129299','&#129300','&#129301','&#129312','&#129313','&#129314','&#129315','&#129316','&#129317','&#129319','&#129320','&#129321','&#129322','&#129323','&#129324','&#129325','&#129326','&#129327','&#129488','&#9757','&#9977','&#9994','&#9995','&#9996','&#9997','&#127877','&#127938','&#127939','&#127940','&#127943','&#127946','&#127947','&#127948','&#128066','&#128067','&#128070','&#128071','&#128072','&#128073','&#128074','&#128075','&#128076','&#128077','&#128078','&#128079','&#128080','&#128102','&#128103','&#128104','&#128105','&#128110','&#128112','&#128113','&#128114','&#128115','&#128116','&#128117','&#128118','&#128119','&#128120','&#128124','&#128129','&#128130','&#128131','&#128133','&#128134','&#128135','&#128170','&#128372','&#128373','&#128378','&#128400','&#128405','&#128406','&#128581','&#128582','&#128583','&#128587','&#128588','&#128589','&#128590','&#128591','&#128675','&#128692','&#128693','&#128694','&#128704','&#128716','&#129304','&#129305','&#129306','&#129307','&#129308','&#129309','&#129310','&#129311','&#129318','&#129328','&#129329','&#129330','&#129331','&#129332','&#129333','&#129334','&#129335','&#129336','&#129337','&#129341','&#129342','&#129489','&#129490','&#129491','&#129492','&#129493','&#129494','&#129495','&#129496','&#129497','&#129498','&#129500','&#129501', '&#128000','&#128001','&#128002','&#128003','&#128004','&#128005','&#128006','&#128007','&#128008','&#128010','&#128011','&#128012','&#128013','&#128014','&#128015','&#128016','&#128017','&#128018','&#128019','&#128020','&#128021','&#128022','&#128023','&#128024','&#128025','&#128026','&#128027','&#128028','&#128029','&#128030','&#128031','&#128032','&#128033','&#128034','&#128035','&#128036','&#128037','&#128038','&#128039','&#128040','&#128041','&#128042','&#128043','&#128044','&#128045','&#128046','&#128047','&#128048','&#128049','&#128050','&#128051','&#128052','&#128053','&#128054','&#128055','&#128056','&#128057','&#128058','&#128059','&#128060','&#128061','&#128062','&#128063'];
@@ -172,6 +172,8 @@ $(document).ready(function(){
       var hours = date.getHours(); // salvo l'ora
       var minutes = date.getMinutes(); // salvo i minuti
 
+
+
       // condizione che aggiunge uno zero all'inizio del numero, se questo è inferiore a 10
       if (minutes < 10) {
         minutes = '0' + minutes;
@@ -179,12 +181,35 @@ $(document).ready(function(){
 
       var time = hours + ":" + minutes; // salvo in una variabile l'ora e i minuti
 
+      // variabili handlebars
+      var targetHtml = $('#chat-template').html();
+      var template = Handlebars.compile(targetHtml);
+
+      // oggetto handlebars per chat inviata da me
+      var contextSent = {
+        typeChat: "chat-sent",
+        textChat: textInput,
+        time: time,
+        typeDropDownMenu: "s"
+      }
+      var contentHtmlS = template(contextSent);
+
+      
+      // oggetto handlebars per chat di risposta
+      var contextReceveid = {
+        typeChat: "chat-receveid",
+        textChat: 'Ok 😉',
+        time: time,
+        typeDropDownMenu: "r"
+      }
+      var contentHtmlR = template(contextReceveid);
+
       // se il messaggio è vuoto non fare nulla
       if (textInput == "") {
 
         // altrimenti inseriscilo nella finestra della conversazione
       } else {
-          $('.content-right.active').append("<div class='chat chat-sent'>" + "<p class='text-message'>" + textInput + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenuS + "</div>");
+          $('.content-right.active').append(contentHtmlS);
 
           inputChat.val(""); // il valore dell'input si azzera dopo che è stato inviato il messaggio
 
@@ -193,7 +218,7 @@ $(document).ready(function(){
           // timing function che manda il messaggio "ok" in risposta al messaggio dell'utente dopo 1s che l'utente ha scritto
           setTimeout(
             function () {
-              $('.content-right.active').append("<div class='chat chat-receveid'>" + "<p class='text-message'>" + "ok" + "</p>" + "<i class='fa fa-chevron-down'></i>" + "<span class='message-time'>" + time + "</span>" + dropdownMenuR + "</div>");
+              $('.content-right.active').append(contentHtmlR);
               $('.name-chat').find('small').text("Ultimo accesso oggi alle " + time); // il testo sta scrivendo... viene sostituito dal testo precedente più l'ora dell'invio del suo messaggio
               $('li.active-chat .chat-time').text(time); // l'ora dell'ultimo messaggio inviato viene messa anche nel riquadro del contatto
               var textLastMsgReceveid = $('.content-right.active .chat-receveid:last p').text(); // salvo l'ultimo messaggio scritto dal contatto
